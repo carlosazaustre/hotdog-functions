@@ -10,31 +10,49 @@ class App extends Component {
   }
 
   componentWillMount() {
-    firebase.database().ref('/uploads').on('child_changed', snapshot => {
-      console.log(snapshot.val());
+    firebase.database().ref('/uploads').on('value', snapshot => {
+      this.setState({ isHotdog: snapshot.val().photo.isHotdog });
     });
   }
 
   handleUpload = (event) => {
     const file = event.target.files[0];
 
-    return firebase.database().ref('/uploads').push({
-      imageUrl: null,
+    return firebase.database().ref('/uploads/photo').set({
       isHotdog: false
     })
     .then(data => {
       return firebase.storage().ref(`/uploads/${file.name}`).put(file)
         .then(snapshot => {
-          data.update({ imageUrl: snapshot.metadata.downloadURLs[0] })
           this.setState({ imageUrl: snapshot.metadata.downloadURLs[0] });
         });
     });
   }
 
+  renderHeaderOK() {
+    console.log('render IS hotdog')
+    return(
+      <header className="header header--isHotdog">
+        Hotdog!
+        <span className="hotdog hotdog--green">🌭</span>
+      </header>
+    );
+  }
+
+  renderHeaderNotOK() {
+    console.log('render is NOT hotdog')
+    return(
+      <header className="header">
+        Not Hotdog!
+        <span className="hotdog">🌭</span>
+      </header>
+    );
+  }
+
   render() {
     return (
       <div>
-        <header className="header">HotDog or No?</header>
+        { this.state.isHotdog ? this.renderHeaderOK() : this.renderHeaderNotOK() }
         <label
           className="cameraButton"
           htmlFor="inputElement">📷</label>

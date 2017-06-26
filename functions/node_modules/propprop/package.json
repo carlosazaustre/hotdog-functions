@@ -1,0 +1,22 @@
+{
+  "name": "propprop",
+  "version": "0.3.1",
+  "author": "Stephen Sawchuk <sawchuk@gmail.com>",
+  "license": "MIT",
+  "description": "Just a helper for plucking a property out of an object.",
+  "repository": "stephenplusplus/propprop",
+  "scripts": {
+    "browser": "a=$npm_package_name; browserify -r ./index:$a -s $a index.js -o browser.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "prop",
+    "property",
+    "pluck"
+  ],
+  "devDependencies": {
+    "browserify": "^3.0.0"
+  }
+}
