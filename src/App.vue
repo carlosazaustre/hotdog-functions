@@ -24,8 +24,7 @@ export default {
   components: { AppHeader, AppImage },
   data () {
     return {
-      isHotdog: false,
-      imageUrl: null
+      isHotdog: false
     }
   },
 
